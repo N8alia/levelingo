@@ -1,0 +1,15 @@
+{
+  "name": "Levelingo",
+  "short_name": "Levelingo",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#121826",
+  "theme_color": "#8B5CF6",
+  "icons": [
+    {
+      "src": "levelingo-logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
