@@ -50,6 +50,35 @@ body{
 .app{
   max-width:480px;
   margin:0 auto;
+  position:relative;
+}
+
+.lang-switch{
+  position:absolute;
+  top:0;
+  right:0;
+  display:flex;
+  gap:4px;
+  background:var(--bg-soft);
+  padding:4px;
+  border-radius:999px;
+}
+.lang-btn{
+  border:0;
+  background:transparent;
+  color:var(--surface);
+  opacity:0.6;
+  font-family:var(--font-mono);
+  font-size:12px;
+  font-weight:600;
+  padding:6px 10px;
+  border-radius:999px;
+  cursor:pointer;
+}
+.lang-btn.active{
+  background:var(--surface);
+  color:var(--ink);
+  opacity:1;
 }
 
 .app-header{
@@ -98,7 +127,6 @@ body{
   font-size:12px;
   letter-spacing:0.1em;
   text-transform:uppercase;
-  color:var(--muted);
   color:rgba(251,248,242,0.6);
   margin:8px 0 0;
 }
@@ -245,7 +273,8 @@ select:focus-visible,
 .text-input:focus-visible,
 .btn:focus-visible,
 .timeline-dot:focus-visible,
-.tab-btn:focus-visible{
+.tab-btn:focus-visible,
+.lang-btn:focus-visible{
   outline:3px solid var(--present);
   outline-offset:2px;
 }
@@ -332,6 +361,48 @@ select:focus-visible,
   margin:0 0 12px;
   font-size:16px;
 }
+.flash-instruction{
+  font-family:var(--font-mono);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--muted);
+  margin:0 0 10px;
+}
+.flash-main{
+  display:flex;
+  gap:10px;
+  margin-bottom:10px;
+}
+.flash-field{
+  flex:1;
+  min-width:0;
+  background:#F7F5EF;
+  border-radius:var(--radius-sm);
+  padding:10px 12px;
+}
+.flash-eyebrow{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--muted);
+  margin-bottom:4px;
+}
+.flash-word{
+  font-family:var(--font-display);
+  font-size:22px;
+  font-weight:700;
+  color:var(--ink);
+  word-break:break-word;
+}
+.flash-marker{
+  font-size:15px;
+  font-weight:600;
+  color:var(--ink);
+  word-break:break-word;
+}
 .mono{
   font-family:var(--font-mono);
 }
@@ -353,6 +424,146 @@ select:focus-visible,
   font-size:14px;
   font-weight:600;
 }
+.hint-toggle{
+  background:transparent;
+  border:1.5px dashed var(--line);
+  color:var(--muted);
+  font-family:var(--font-mono);
+  font-size:12px;
+  font-weight:600;
+  padding:8px 10px;
+  border-radius:var(--radius-sm);
+  cursor:pointer;
+  width:100%;
+  margin-top:4px;
+}
+.hint-toggle:hover{
+  color:var(--ink);
+  border-color:var(--muted);
+}
+
+.drill-intro{
+  font-size:13px;
+  color:var(--muted);
+  text-align:left;
+  margin:0 0 12px;
+}
+.drill-header{
+  display:flex;
+  gap:8px;
+  margin-bottom:10px;
+}
+.drill-header select{
+  flex:2;
+  margin:0;
+}
+.drill-header .btn{
+  flex:1;
+  margin-bottom:0;
+  width:auto;
+}
+.drill-phrase{
+  font-family:var(--font-mono);
+  font-size:14px;
+  color:var(--ink);
+  margin:0 0 10px;
+  text-align:left;
+}
+.drill-toggles{
+  display:flex;
+  gap:8px;
+  margin-bottom:10px;
+}
+.drill-toggles .hint-toggle{
+  margin:0;
+}
+.drill-table-wrap{
+  overflow-x:auto;
+  margin-bottom:12px;
+  border-radius:var(--radius-md);
+  border:1.5px solid var(--line);
+}
+.drill-table{
+  border-collapse:collapse;
+  width:100%;
+  min-width:580px;
+}
+.drill-table th,
+.drill-table td{
+  padding:8px;
+  text-align:left;
+  border-bottom:1px solid var(--line);
+  vertical-align:top;
+}
+.drill-table thead th{
+  font-family:var(--font-mono);
+  font-size:11px;
+  text-transform:uppercase;
+  color:var(--muted);
+  background:#F7F5EF;
+  position:sticky;
+  top:0;
+}
+.drill-th-tense{ width:126px; }
+.drill-tense-cell{
+  font-family:var(--font-mono);
+  font-size:11px;
+  font-weight:600;
+  border-left:4px solid var(--row-color, var(--muted));
+}
+.drill-tense-cell .dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--row-color, var(--muted));
+  display:inline-block;
+  margin-right:4px;
+}
+.drill-cell-row{
+  display:flex;
+  gap:4px;
+  align-items:center;
+}
+.cell-hint-btn{
+  flex-shrink:0;
+  width:24px;
+  height:24px;
+  border-radius:6px;
+  border:1.5px solid var(--line);
+  background:white;
+  font-size:13px;
+  cursor:pointer;
+  padding:0;
+  line-height:1;
+  opacity:0.6;
+}
+.cell-hint-btn:hover{
+  border-color:var(--muted);
+  opacity:1;
+}
+.cell-hint-btn.active{
+  background:#FEF3C7;
+  border-color:var(--present);
+  opacity:1;
+}
+.cell-formula{
+  margin-top:5px;
+  font-family:var(--font-mono);
+  font-size:10px;
+  color:var(--muted);
+  line-height:1.4;
+  display:none;
+}
+.drill-cell-input{
+  width:82px;
+  padding:8px;
+  font-size:13px;
+  border-radius:8px;
+  border:1.5px solid var(--line);
+  font-family:var(--font-body);
+}
+.drill-cell-input.correct{ border-color:var(--success); background:#EAF9F1; }
+.drill-cell-input.wrong{ border-color:var(--error); background:#FDEEEB; }
 
 .custom-form{
   text-align:left;
@@ -446,6 +657,11 @@ select:focus-visible,
 
 <div class="app">
 
+  <div class="lang-switch" role="group" aria-label="Language">
+    <button id="langRuBtn" class="lang-btn active" onclick="setLanguage('ru')">RU</button>
+    <button id="langEnBtn" class="lang-btn" onclick="setLanguage('en')">EN</button>
+  </div>
+
   <header class="app-header">
     <div class="logomark" aria-hidden="true">
       <span class="lm-dot" style="--c:var(--past)"></span>
@@ -460,11 +676,52 @@ select:focus-visible,
   <div class="timeline" id="timelineStrip"></div>
 
   <nav class="tabs">
-    <button id="tabTrainingBtn" class="tab-btn active" onclick="switchTab('training')">Тренировка</button>
-    <button id="tabLearningBtn" class="tab-btn" onclick="switchTab('learning')">Обучение</button>
+    <button id="tabDrillBtn" class="tab-btn active" onclick="switchTab('drill')">Прогон</button>
+    <button id="tabTrainingBtn" class="tab-btn" onclick="switchTab('training')">Тренировка</button>
+    <button id="tabLearningBtn" class="tab-btn" onclick="switchTab('learning')">Теория</button>
   </nav>
 
-  <section class="panel" id="trainingSection">
+  <section class="panel" id="drillSection">
+
+    <div class="stat-bar">
+      <span class="stat-chip" id="xpDrill">XP 0</span>
+      <span class="stat-chip stat-chip--muted" id="levelChipDrill"></span>
+    </div>
+
+    <p class="drill-intro" id="drillIntro">Впиши это же слово во все времена — сразу видно, чем они отличаются</p>
+
+    <div class="drill-header">
+      <select id="drillVerb" onchange="loadDrillWord(this.value)"></select>
+      <button id="drillNewBtn" class="btn btn-violet" onclick="newDrillWord()">Новое слово</button>
+    </div>
+
+    <p class="drill-phrase" id="drillPhrase"></p>
+
+    <div class="drill-toggles">
+      <button type="button" class="hint-toggle" id="drillShowAllBtn" onclick="toggleDrillAnswers()">Показать все ответы</button>
+    </div>
+
+    <div class="drill-table-wrap">
+      <table class="drill-table">
+        <thead>
+          <tr>
+            <th class="drill-th-tense" id="drillThTense">Время</th>
+            <th>+</th>
+            <th>–</th>
+            <th>?</th>
+          </tr>
+        </thead>
+        <tbody id="drillRows"></tbody>
+      </table>
+    </div>
+
+    <button id="drillCheckAllBtn" class="btn btn-amber" onclick="checkDrill()">Проверить всё</button>
+
+    <div id="drillResult" class="result" style="display:none;"></div>
+
+  </section>
+
+  <section class="panel" id="trainingSection" style="display:none;">
 
     <div class="stat-bar">
       <span class="stat-chip" id="xp">XP 0</span>
@@ -473,7 +730,7 @@ select:focus-visible,
 
     <div class="controls">
       <select id="time">
-        <option value="all">All tenses</option>
+        <option value="all" id="timeAllOption">All tenses</option>
         <option>Present Simple</option>
         <option>Present Continuous</option>
         <option>Past Simple</option>
@@ -484,46 +741,46 @@ select:focus-visible,
       </select>
 
       <select id="topic">
-        <option value="all">All topics</option>
-        <option value="relationship">relationship</option>
-        <option value="travel">travel</option>
-        <option value="daily">daily</option>
-        <option value="learning">learning</option>
-        <option value="sport">sport</option>
-        <option value="food">food</option>
-        <option value="work">work</option>
-        <option value="hobby">hobby</option>
+        <option value="all" id="topicAllOption">All topics</option>
+        <option value="relationship" id="topicOption-relationship">relationship</option>
+        <option value="travel" id="topicOption-travel">travel</option>
+        <option value="daily" id="topicOption-daily">daily</option>
+        <option value="learning" id="topicOption-learning">learning</option>
+        <option value="sport" id="topicOption-sport">sport</option>
+        <option value="food" id="topicOption-food">food</option>
+        <option value="work" id="topicOption-work">work</option>
+        <option value="hobby" id="topicOption-hobby">hobby</option>
       </select>
 
       <select id="type">
-        <option value="all">All types</option>
-        <option value="statement">Утверждение</option>
-        <option value="negative">Отрицание</option>
-        <option value="question">Вопрос</option>
+        <option value="all" id="typeAllOption">All types</option>
+        <option value="statement" id="typeStatementOption">Statement</option>
+        <option value="negative" id="typeNegativeOption">Negative</option>
+        <option value="question" id="typeQuestionOption">Question</option>
       </select>
     </div>
 
-    <button class="btn btn-violet" onclick="newCard()">New card</button>
+    <button id="newCardBtn" class="btn btn-violet" onclick="newCard()">New card</button>
 
     <div class="flashcard" id="card">
-      <p class="placeholder">Нажми New card</p>
+      <p class="placeholder">Tap New card</p>
     </div>
 
     <input id="answer" class="text-input" placeholder="Write your sentence">
 
-    <button class="btn btn-amber" onclick="check()">Check</button>
+    <button id="checkBtn" class="btn btn-amber" onclick="check()">Check</button>
 
     <div class="action-row secondary">
-      <button class="btn btn-outline btn-outline--past" onclick="showProgress()">Progress</button>
-      <button class="btn btn-outline btn-outline--error" onclick="repeatMistakes()">Repeat mistakes</button>
-      <button class="btn btn-outline btn-outline--future" onclick="toggleCustomForm()">+ Своё слово</button>
+      <button id="progressBtn" class="btn btn-outline btn-outline--past" onclick="showProgress()">Progress</button>
+      <button id="repeatBtn" class="btn btn-outline btn-outline--error" onclick="repeatMistakes()">Repeat mistakes</button>
+      <button id="addWordBtn" class="btn btn-outline btn-outline--future" onclick="toggleCustomForm()">+ Add word</button>
     </div>
 
     <div class="custom-form" id="customForm" style="display:none;">
       <select id="customVerb"></select>
-      <input id="customPhrase" class="text-input" placeholder="Дополнение, например: in the park">
-      <input id="customTopic" class="text-input" placeholder="Тема (необязательно)">
-      <button class="btn btn-violet" onclick="addCustomCard()">Добавить карточку</button>
+      <input id="customPhrase" class="text-input" placeholder="Complement, e.g. in the park">
+      <input id="customTopic" class="text-input" placeholder="Topic (optional)">
+      <button id="addCardBtn" class="btn btn-violet" onclick="addCustomCard()">Add card</button>
     </div>
 
     <div id="result" class="result" style="display:none;"></div>
@@ -564,8 +821,14 @@ function save(){
 }
 
 function updateXP(){
-  document.getElementById("xp").innerHTML = "XP " + progress.xp;
-  document.getElementById("levelChip").innerHTML = getLevel();
+  let xpText = "XP " + progress.xp;
+  let levelText = getLevel();
+  document.getElementById("xp").innerHTML = xpText;
+  document.getElementById("levelChip").innerHTML = levelText;
+  let xpDrill = document.getElementById("xpDrill");
+  if(xpDrill) xpDrill.innerHTML = xpText;
+  let levelChipDrill = document.getElementById("levelChipDrill");
+  if(levelChipDrill) levelChipDrill.innerHTML = levelText;
 }
 
 updateXP();
@@ -575,8 +838,10 @@ updateXP();
 // ===============================
 
 function switchTab(tab){
+  document.getElementById("drillSection").style.display = (tab==="drill") ? "block" : "none";
   document.getElementById("trainingSection").style.display = (tab==="training") ? "block" : "none";
   document.getElementById("learningSection").style.display = (tab==="learning") ? "block" : "none";
+  document.getElementById("tabDrillBtn").classList.toggle("active", tab==="drill");
   document.getElementById("tabTrainingBtn").classList.toggle("active", tab==="training");
   document.getElementById("tabLearningBtn").classList.toggle("active", tab==="learning");
 
@@ -733,8 +998,102 @@ const TENSES = {
 };
 
 const TYPES = ["statement","negative","question"];
-const TYPE_LABELS = {statement:"утверждение", negative:"отрицание", question:"вопрос"};
 const TYPE_COLOR_VAR = {statement:"--future", negative:"--past", question:"--perfect"};
+
+// ===============================
+// i18n
+// ===============================
+
+let LANG = "ru";
+
+const STRINGS = {
+  ru:{
+    tabTraining:"Тренировка", tabLearning:"Теория",
+    allTenses:"Все времена", allTopics:"Все темы", allTypes:"Все типы",
+    typeStatement:"Утверждение", typeNegative:"Отрицание", typeQuestion:"Вопрос",
+    newCard:"Новая карточка", check:"Проверить", progress:"Прогресс",
+    repeat:"Повторить ошибки", addWord:"+ Своё слово", addCardBtn:"Добавить карточку",
+    cardPlaceholder:"Нажми «Новая карточка»", answerPlaceholder:"Напиши предложение",
+    customPhrasePlaceholder:"Дополнение, например: in the park", customTopicPlaceholder:"Тема (необязательно)",
+    labelTopic:"Тема", labelTense:"Время", labelType:"Тип", labelVerb:"Слово",
+    labelMarker:"Маркер", labelFormula:"Формула", cardInstruction:"Составь предложение",
+    resultCorrectTitle:"Верно", resultAlmostTitle:"Почти", resultPracticeTitle:"Нужна практика",
+    resultProgressTitle:"Прогресс", resultNoMistakesTitle:"Пока без ошибок", resultAddedTitle:"Добавлено",
+    msgTimeOk:"Время верно", msgFixes:"Исправления", msgCorrectVariant:"Правильный вариант",
+    msgGreat:"Отлично!", msgXpGained:"XP", msgGrammarOk:"Грамматика верна", msgFixThis:"Нужно исправить",
+    msgCorrectly:"Правильно", msgCheck:"Проверь", msgFormula:"Формула", msgExample:"Пример",
+    progLevel:"Уровень", progXp:"XP", progCorrect:"Правильных ответов", progStreak:"Серия",
+    progWeak:"Слабые места", progNoErrors:"Ошибок нет 🎉", progNoMistakesYet:"Пока ошибок нет",
+    newCardAdded:"Новая карточка", topicWord:"тема",
+    alertNoCards:"Нет карточек для этого выбора", alertNeedPhrase:"Введи дополнение к глаголу, например: in the park",
+    needAux:"не хватает вспомогательного глагола", needForm:"нужна форма", insteadOf:"вместо",
+    needNegForm:"нужна отрицательная форма:", checkFormAfter:"проверь форму глагола после",
+    questionStartsWith:"вопрос должен начинаться с", needQuestionAux:"нужен вопросительный глагол",
+    atTheStart:"в начале",
+    learningWhenUsed:"Когда используется", learningScheme:"Схема", learningMarkers:"Типичные маркеры",
+    needArticle:"нужен артикль a/the/my перед",
+    showFormula:"Показать формулу", hideFormula:"Скрыть формулу",
+    tabDrill:"Прогон", drillNewWord:"Новое слово", drillCheckAll:"Проверить всё",
+    drillShowAll:"Показать все ответы", drillHideAll:"Скрыть ответы",
+    drillScore:"Результат", drillIntro:"Впиши это же слово во все времена — сразу видно, чем они отличаются",
+    drillInputPlaceholder:"Напиши предложение"
+  },
+  en:{
+    tabTraining:"Training", tabLearning:"Theory",
+    allTenses:"All tenses", allTopics:"All topics", allTypes:"All types",
+    typeStatement:"Statement", typeNegative:"Negative", typeQuestion:"Question",
+    newCard:"New card", check:"Check", progress:"Progress",
+    repeat:"Repeat mistakes", addWord:"+ Add word", addCardBtn:"Add card",
+    cardPlaceholder:"Tap New card", answerPlaceholder:"Write your sentence",
+    customPhrasePlaceholder:"Complement, e.g. in the park", customTopicPlaceholder:"Topic (optional)",
+    labelTopic:"Topic", labelTense:"Tense", labelType:"Type", labelVerb:"Word",
+    labelMarker:"Marker", labelFormula:"Formula", cardInstruction:"Build a sentence",
+    resultCorrectTitle:"Correct", resultAlmostTitle:"Almost there", resultPracticeTitle:"Needs practice",
+    resultProgressTitle:"Progress", resultNoMistakesTitle:"No mistakes yet", resultAddedTitle:"Added",
+    msgTimeOk:"Tense is correct", msgFixes:"Fixes", msgCorrectVariant:"Correct version",
+    msgGreat:"Great job!", msgXpGained:"XP", msgGrammarOk:"Grammar is correct", msgFixThis:"Needs fixing",
+    msgCorrectly:"Correct version", msgCheck:"Check", msgFormula:"Formula", msgExample:"Example",
+    progLevel:"Level", progXp:"XP", progCorrect:"Correct answers", progStreak:"Streak",
+    progWeak:"Weak spots", progNoErrors:"No mistakes 🎉", progNoMistakesYet:"No mistakes yet",
+    newCardAdded:"New card", topicWord:"topic",
+    alertNoCards:"No cards for this selection", alertNeedPhrase:"Add a complement, e.g. in the park",
+    needAux:"missing auxiliary verb", needForm:"needs the form", insteadOf:"instead of",
+    needNegForm:"needs the negative form:", checkFormAfter:"check the verb form after",
+    questionStartsWith:"a question should start with", needQuestionAux:"needs the question auxiliary",
+    atTheStart:"at the start",
+    learningWhenUsed:"When it's used", learningScheme:"Scheme", learningMarkers:"Typical markers",
+    needArticle:"needs an article (a/the/my) before",
+    showFormula:"Show formula", hideFormula:"Hide formula",
+    tabDrill:"Drill", drillNewWord:"New word", drillCheckAll:"Check all",
+    drillShowAll:"Show all answers", drillHideAll:"Hide answers",
+    drillScore:"Score", drillIntro:"Type the same word into every tense — the differences become obvious",
+    drillInputPlaceholder:"Write your sentence"
+  }
+};
+
+function t(key){
+  return STRINGS[LANG][key] || key;
+}
+
+const TOPIC_LABELS = {
+  relationship:{ru:"отношения", en:"relationship"},
+  travel:{ru:"путешествия", en:"travel"},
+  daily:{ru:"быт", en:"daily"},
+  learning:{ru:"учёба", en:"learning"},
+  sport:{ru:"спорт", en:"sport"},
+  food:{ru:"еда", en:"food"},
+  work:{ru:"работа", en:"work"},
+  hobby:{ru:"хобби", en:"hobby"}
+};
+
+function topicLabel(topic){
+  return TOPIC_LABELS[topic] ? TOPIC_LABELS[topic][LANG] : topic;
+}
+
+const TYPE_LABEL_KEY = {statement:"typeStatement", negative:"typeNegative", question:"typeQuestion"};
+function typeLabel(type){
+  return t(TYPE_LABEL_KEY[type]);
+}
 
 // ===============================
 // Timeline (signature element)
@@ -813,11 +1172,6 @@ document.getElementById("learnTense").addEventListener("change", function(){
 
 const LEARNING = {
   "Present Simple":{
-    usage:[
-      "Регулярные действия и привычки: <i>I play volleyball every week.</i>",
-      "Факты и общие истины: <i>Water boils at 100°C.</i>",
-      "Расписания и графики: <i>The train leaves at 9 am.</i>"
-    ],
     examples:{
       statement:"I play volleyball every week.",
       negative:"I don't play volleyball every day.",
@@ -826,11 +1180,6 @@ const LEARNING = {
     markers:["usually","often","every day","always","never","sometimes"]
   },
   "Present Continuous":{
-    usage:[
-      "Действие происходит прямо сейчас: <i>I am watching a movie right now.</i>",
-      "Временная ситуация вокруг настоящего момента: <i>I am studying English this month.</i>",
-      "Договорённость на ближайшее будущее: <i>I am meeting my friend tomorrow.</i>"
-    ],
     examples:{
       statement:"I am watching a movie at the moment.",
       negative:"I am not watching a movie now.",
@@ -839,10 +1188,6 @@ const LEARNING = {
     markers:["now","at the moment","right now","currently","this week"]
   },
   "Past Simple":{
-    usage:[
-      "Законченное действие в прошлом с конкретным временем: <i>I went to the cinema yesterday.</i>",
-      "Последовательность законченных действий: <i>I woke up, had breakfast and went to work.</i>"
-    ],
     examples:{
       statement:"I went to the cinema yesterday.",
       negative:"I didn't go to the cinema yesterday.",
@@ -851,10 +1196,6 @@ const LEARNING = {
     markers:["yesterday","last week","in 2020","two days ago","ago"]
   },
   "Past Continuous":{
-    usage:[
-      "Действие было в процессе в конкретный момент в прошлом: <i>I was watching TV at 8 pm yesterday.</i>",
-      "Фоновое действие, которое прервало другое действие: <i>I was sleeping when he called.</i>"
-    ],
     examples:{
       statement:"I was watching TV at 8 pm yesterday.",
       negative:"I wasn't watching TV at 8 pm yesterday.",
@@ -863,11 +1204,6 @@ const LEARNING = {
     markers:["while","when","at 8 pm yesterday","all day yesterday"]
   },
   "Future Simple":{
-    usage:[
-      "Прогнозы и предположения: <i>It will rain tomorrow.</i>",
-      "Спонтанные решения в момент речи: <i>I will help you.</i>",
-      "Обещания: <i>I will call you tomorrow.</i>"
-    ],
     examples:{
       statement:"I will call my friend tomorrow.",
       negative:"I won't call my friend tomorrow.",
@@ -876,11 +1212,6 @@ const LEARNING = {
     markers:["tomorrow","next week","soon","probably","I think"]
   },
   "Present Perfect":{
-    usage:[
-      "Опыт без указания точного времени: <i>I have been to Paris.</i>",
-      "Действие только что произошло: <i>I have just finished my homework.</i>",
-      "Результат в настоящем важнее момента действия: <i>I have lost my keys (и сейчас их нет).</i>"
-    ],
     examples:{
       statement:"I have already met my friend.",
       negative:"I haven't met my friend yet.",
@@ -889,10 +1220,6 @@ const LEARNING = {
     markers:["already","just","yet","never","ever","since","for"]
   },
   "Present Perfect Continuous":{
-    usage:[
-      "Действие началось в прошлом и продолжается сейчас, важна длительность: <i>I have been studying English for two years.</i>",
-      "Недавно завершившееся действие, у которого виден результат сейчас: <i>I'm tired because I have been running.</i>"
-    ],
     examples:{
       statement:"I have been studying English for two years.",
       negative:"I haven't been studying English for a long time.",
@@ -902,9 +1229,81 @@ const LEARNING = {
   }
 };
 
+const LEARNING_USAGE = {
+  ru:{
+    "Present Simple":[
+      "Регулярные действия и привычки: <i>I play volleyball every week.</i>",
+      "Факты и общие истины: <i>Water boils at 100°C.</i>",
+      "Расписания и графики: <i>The train leaves at 9 am.</i>"
+    ],
+    "Present Continuous":[
+      "Действие происходит прямо сейчас: <i>I am watching a movie right now.</i>",
+      "Временная ситуация вокруг настоящего момента: <i>I am studying English this month.</i>",
+      "Договорённость на ближайшее будущее: <i>I am meeting my friend tomorrow.</i>"
+    ],
+    "Past Simple":[
+      "Законченное действие в прошлом с конкретным временем: <i>I went to the cinema yesterday.</i>",
+      "Последовательность законченных действий: <i>I woke up, had breakfast and went to work.</i>"
+    ],
+    "Past Continuous":[
+      "Действие было в процессе в конкретный момент в прошлом: <i>I was watching TV at 8 pm yesterday.</i>",
+      "Фоновое действие, которое прервало другое действие: <i>I was sleeping when he called.</i>"
+    ],
+    "Future Simple":[
+      "Прогнозы и предположения: <i>It will rain tomorrow.</i>",
+      "Спонтанные решения в момент речи: <i>I will help you.</i>",
+      "Обещания: <i>I will call you tomorrow.</i>"
+    ],
+    "Present Perfect":[
+      "Опыт без указания точного времени: <i>I have been to Paris.</i>",
+      "Действие только что произошло: <i>I have just finished my homework.</i>",
+      "Результат в настоящем важнее момента действия: <i>I have lost my keys (и сейчас их нет).</i>"
+    ],
+    "Present Perfect Continuous":[
+      "Действие началось в прошлом и продолжается сейчас, важна длительность: <i>I have been studying English for two years.</i>",
+      "Недавно завершившееся действие, у которого виден результат сейчас: <i>I'm tired because I have been running.</i>"
+    ]
+  },
+  en:{
+    "Present Simple":[
+      "Regular actions and habits: <i>I play volleyball every week.</i>",
+      "Facts and general truths: <i>Water boils at 100°C.</i>",
+      "Timetables and schedules: <i>The train leaves at 9 am.</i>"
+    ],
+    "Present Continuous":[
+      "An action happening right now: <i>I am watching a movie right now.</i>",
+      "A temporary situation around the present: <i>I am studying English this month.</i>",
+      "A fixed arrangement in the near future: <i>I am meeting my friend tomorrow.</i>"
+    ],
+    "Past Simple":[
+      "A finished action at a specific past time: <i>I went to the cinema yesterday.</i>",
+      "A sequence of completed actions: <i>I woke up, had breakfast and went to work.</i>"
+    ],
+    "Past Continuous":[
+      "An action in progress at a specific moment in the past: <i>I was watching TV at 8 pm yesterday.</i>",
+      "A background action interrupted by another: <i>I was sleeping when he called.</i>"
+    ],
+    "Future Simple":[
+      "Predictions and guesses: <i>It will rain tomorrow.</i>",
+      "Spontaneous decisions made while speaking: <i>I will help you.</i>",
+      "Promises: <i>I will call you tomorrow.</i>"
+    ],
+    "Present Perfect":[
+      "Experience with no specific time mentioned: <i>I have been to Paris.</i>",
+      "An action that just happened: <i>I have just finished my homework.</i>",
+      "A present result matters more than the action itself: <i>I have lost my keys (and I still don't have them).</i>"
+    ],
+    "Present Perfect Continuous":[
+      "Started in the past and still going on, duration matters: <i>I have been studying English for two years.</i>",
+      "A recently finished action with a visible result now: <i>I'm tired because I have been running.</i>"
+    ]
+  }
+};
+
 function renderLearningInfo(){
   let tense = document.getElementById("learnTense").value;
   let info = LEARNING[tense];
+  let usage = LEARNING_USAGE[LANG][tense];
   let formula = TENSES[tense].formula;
   let groupColor = "var(" + GROUP_COLOR_VAR[TENSE_GROUP[tense]] + ")";
 
@@ -914,12 +1313,12 @@ function renderLearningInfo(){
     '<h2 class="tense-title" style="color:' + groupColor + '">' + tense + '</h2>' +
 
     '<div class="info-panel" style="--panel-color:' + groupColor + '">' +
-      '<h3>Когда используется</h3>' +
-      '<ul>' + info.usage.map(function(u){ return '<li>' + u + '</li>'; }).join('') + '</ul>' +
+      '<h3>' + t("learningWhenUsed") + '</h3>' +
+      '<ul>' + usage.map(function(u){ return '<li>' + u + '</li>'; }).join('') + '</ul>' +
     '</div>' +
 
     '<div class="info-panel" style="--panel-color:var(--present)">' +
-      '<h3>Схема</h3>' +
+      '<h3>' + t("learningScheme") + '</h3>' +
       '<div class="scheme-row" style="--row-color:var(' + TYPE_COLOR_VAR.statement + ')">' +
         '<span class="scheme-mark">+</span>' +
         '<div><span class="mono">' + formula.statement + '</span><br><i>' + info.examples.statement + '</i></div>' +
@@ -935,7 +1334,7 @@ function renderLearningInfo(){
     '</div>' +
 
     '<div class="info-panel" style="--panel-color:var(--future)">' +
-      '<h3>Типичные маркеры</h3>' +
+      '<h3>' + t("learningMarkers") + '</h3>' +
       '<p class="marker-list">' + info.markers.map(function(m){ return '<span class="chip chip--marker">' + m + '</span>'; }).join(' ') + '</p>' +
     '</div>';
 
@@ -975,6 +1374,16 @@ const spelling={
 };
 
 let current=null;
+let formulaVisible=false;
+
+function toggleFormula(){
+  formulaVisible = !formulaVisible;
+  let box = document.getElementById("formulaBox");
+  let btn = document.getElementById("formulaToggleBtn");
+  if(!box || !btn) return;
+  box.style.display = formulaVisible ? "flex" : "none";
+  btn.textContent = formulaVisible ? t("hideFormula") : t("showFormula");
+}
 
 function normalize(text){
   return text
@@ -1026,7 +1435,7 @@ function newCard(){
   let combos = buildCombos(tense, topic, type);
 
   if(combos.length==0){
-    alert("Нет карточек для этого выбора");
+    alert(t("alertNoCards"));
     return;
   }
 
@@ -1039,17 +1448,32 @@ function newCard(){
   let groupColorVar = "var(" + GROUP_COLOR_VAR[TENSE_GROUP[current.tense]] + ")";
   let typeColorVar = "var(" + TYPE_COLOR_VAR[current.type] + ")";
 
+  let formulaColorVar = groupColorVar;
+
   document.getElementById("card").innerHTML =
     '<div class="flash-tags">' +
-      '<span class="chip" style="--chip-color:#9CA3AF">' + current.topic + '</span>' +
+      '<span class="chip" style="--chip-color:#9CA3AF">' + topicLabel(current.topic) + '</span>' +
       '<span class="chip" style="--chip-color:' + groupColorVar + '">' + current.tense + '</span>' +
-      '<span class="chip" style="--chip-color:' + typeColorVar + '">' + TYPE_LABELS[current.type] + '</span>' +
+      '<span class="chip" style="--chip-color:' + typeColorVar + '">' + typeLabel(current.type) + '</span>' +
     '</div>' +
-    '<p class="flash-verb"><b>' + VERBS[current.verb].v1 + '</b> &middot; маркер: <span class="mono">' + current.marker + '</span></p>' +
-    '<div class="formula-box">' +
-      '<span class="formula-label">Формула</span>' +
+    '<p class="flash-instruction">' + t("cardInstruction") + '</p>' +
+    '<div class="flash-main">' +
+      '<div class="flash-field">' +
+        '<span class="flash-eyebrow">' + t("labelVerb") + '</span>' +
+        '<span class="flash-word">' + VERBS[current.verb].v1 + '</span>' +
+      '</div>' +
+      '<div class="flash-field">' +
+        '<span class="flash-eyebrow">' + t("labelMarker") + '</span>' +
+        '<span class="flash-marker mono">' + current.marker + '</span>' +
+      '</div>' +
+    '</div>' +
+    '<button type="button" class="hint-toggle" id="formulaToggleBtn" onclick="toggleFormula()">' + t("showFormula") + '</button>' +
+    '<div class="formula-box" id="formulaBox" style="display:none;">' +
+      '<span class="formula-label">' + t("labelFormula") + '</span>' +
       '<span class="mono formula-code">' + TENSES[current.tense].formula[current.type] + '</span>' +
     '</div>';
+
+  formulaVisible = false;
 
   document.getElementById("card").style.borderTopColor = groupColorVar;
 
@@ -1126,6 +1550,10 @@ function fixSpelling(text){
   return { text:text, changes:changes };
 }
 
+function articleError(word){
+  return "'" + word + "' " + t("needArticle");
+}
+
 function checkArticle(text){
   let words = text.split(" ");
   let errors=[];
@@ -1141,7 +1569,7 @@ function checkArticle(text){
         before!="my" &&
         before!="this"
       ){
-        errors.push("Перед '"+word+"' нужен a/the/my");
+        errors.push(articleError(word));
       }
     }
   }
@@ -1164,10 +1592,10 @@ function checkStructure(text, combo){
       correct = true;
     } else if(formOk && !auxOk){
       correct = true;
-      mistakes.push("не хватает вспомогательного глагола ("+rules.statementAux.join("/")+")");
+      mistakes.push(t("needAux") + " (" + rules.statementAux.join("/") + ")");
     } else if(!formOk && rules.form!="v1" && hasWord(text, VERBS[verbKey].v1)){
       correct = true;
-      mistakes.push("нужна форма '"+VERBS[verbKey][rules.form]+"', а не '"+VERBS[verbKey].v1+"'");
+      mistakes.push(t("needForm") + " '" + VERBS[verbKey][rules.form] + "' " + t("insteadOf") + " '" + VERBS[verbKey].v1 + "'");
     }
   }
 
@@ -1180,10 +1608,10 @@ function checkStructure(text, combo){
       correct = true;
     } else if(formOk){
       correct = true;
-      mistakes.push("нужна отрицательная форма: "+rules.negAux[0]);
+      mistakes.push(t("needNegForm") + " " + rules.negAux[0]);
     } else if(auxOk){
       correct = true;
-      mistakes.push("проверь форму глагола после "+rules.negAux[0]);
+      mistakes.push(t("checkFormAfter") + " " + rules.negAux[0]);
     }
   }
 
@@ -1197,10 +1625,10 @@ function checkStructure(text, combo){
       correct = true;
     } else if(formOk && auxOk){
       correct = true;
-      mistakes.push("вопрос должен начинаться с "+rules.qAux[0]);
+      mistakes.push(t("questionStartsWith") + " " + rules.qAux[0]);
     } else if(formOk){
       correct = true;
-      mistakes.push("нужен вопросительный глагол "+rules.qAux[0]+" в начале");
+      mistakes.push(t("needQuestionAux") + " " + rules.qAux[0] + " " + t("atTheStart"));
     }
   }
 
@@ -1241,12 +1669,12 @@ function check(){
       progress.xp += 7;
 
       show(
-        "Almost there",
-        `Время: ✅ ${current.tense} (${TYPE_LABELS[current.type]})<br><br>
-         Исправления:<br>
+        t("resultAlmostTitle"),
+        `${t("msgTimeOk")}: ✅ ${current.tense} (${typeLabel(current.type)})<br><br>
+         ${t("msgFixes")}:<br>
          ${fixed.changes.join("<br>")}<br>
          ${structureResult.mistakes.join("<br>")}<br><br>
-         Правильный вариант:<br>
+         ${t("msgCorrectVariant")}:<br>
          <b>${buildExample(current)}</b>`,
         "warn"
       );
@@ -1256,10 +1684,10 @@ function check(){
       progress.correct++;
 
       show(
-        "Correct",
-        `Отлично!<br><br>
-         Время: <b>${current.tense}</b> (${TYPE_LABELS[current.type]})<br><br>
-         +10 XP`,
+        t("resultCorrectTitle"),
+        `${t("msgGreat")}<br><br>
+         ${t("labelTense")}: <b>${current.tense}</b> (${typeLabel(current.type)})<br><br>
+         +10 ${t("msgXpGained")}`,
         "success"
       );
     }
@@ -1269,11 +1697,11 @@ function check(){
     progress.xp += 7;
 
     show(
-      "Almost there",
-      `Грамматика ✅<br><br>
-       Нужно исправить:<br>
+      t("resultAlmostTitle"),
+      `${t("msgGrammarOk")} ✅<br><br>
+       ${t("msgFixThis")}:<br>
        ${articles.join("<br>")}<br><br>
-       Правильно:<br>
+       ${t("msgCorrectly")}:<br>
        <b>${buildExample(current)}</b>`,
       "warn"
     );
@@ -1282,12 +1710,12 @@ function check(){
     progress.errors[errorKey] = (progress.errors[errorKey]||0)+1;
 
     show(
-      "Needs practice",
-      `Проверь:<br>
-       <b>${current.tense}</b> — ${TYPE_LABELS[current.type]}<br><br>
-       Формула:<br>
+      t("resultPracticeTitle"),
+      `${t("msgCheck")}:<br>
+       <b>${current.tense}</b> — ${typeLabel(current.type)}<br><br>
+       ${t("msgFormula")}:<br>
        ${TENSES[current.tense].formula[current.type]}<br><br>
-       Пример:<br>
+       ${t("msgExample")}:<br>
        ${buildExample(current)}`,
       "error"
     );
@@ -1319,27 +1747,27 @@ function getLevel(){
 }
 
 function showProgress(){
-  let text = `<b>Уровень ${getLevel()}</b><br><br>
-    XP: ${progress.xp}<br>
-    Correct answers: ${progress.correct}<br>
-    Streak: ${progress.streak}<br><br>
-    <b>Слабые места:</b><br>`;
+  let text = `<b>${t("progLevel")}: ${getLevel()}</b><br><br>
+    ${t("progXp")}: ${progress.xp}<br>
+    ${t("progCorrect")}: ${progress.correct}<br>
+    ${t("progStreak")}: ${progress.streak}<br><br>
+    <b>${t("progWeak")}:</b><br>`;
 
   let keys = Object.keys(progress.errors);
 
   if(keys.length==0){
-    text += "Нет ошибок 🎉";
+    text += t("progNoErrors");
   } else {
     keys.sort((a,b)=>progress.errors[b]-progress.errors[a]);
     for(let key of keys){
       let parts = key.split("|");
       let tense = parts[0];
       let type = parts[1];
-      text += `<br>${tense} (${TYPE_LABELS[type]}): ${progress.errors[key]}`;
+      text += `<br>${tense} (${typeLabel(type)}): ${progress.errors[key]}`;
     }
   }
 
-  show("Progress", text, "info");
+  show(t("resultProgressTitle"), text, "info");
 }
 
 function repeatMistakes(){
@@ -1353,7 +1781,7 @@ function repeatMistakes(){
   }
 
   if(keys.length==0){
-    show("No mistakes yet", "Пока ошибок нет", "info");
+    show(t("resultNoMistakesTitle"), t("progNoMistakesYet"), "info");
     return;
   }
 
@@ -1381,6 +1809,183 @@ function populateCustomVerbSelect(){
 }
 populateCustomVerbSelect();
 
+// ===============================
+// Drill: one word through every tense
+// ===============================
+
+let drillCurrentItem = null;
+let drillAnswersVisible = false;
+
+function populateDrillVerbSelect(){
+  let sel = document.getElementById("drillVerb");
+  let items = getAllItems();
+  let previousValue = sel.value;
+  sel.innerHTML = "";
+  items.forEach(function(item, idx){
+    let opt = document.createElement("option");
+    opt.value = idx;
+    opt.textContent = VERBS[item.verb].v1 + " — " + item.phrase;
+    sel.appendChild(opt);
+  });
+  if(previousValue !== "" && Number(previousValue) < items.length){
+    sel.value = previousValue;
+  }
+}
+populateDrillVerbSelect();
+
+function newDrillWord(){
+  let items = getAllItems();
+  let idx = Math.floor(Math.random()*items.length);
+  loadDrillWord(idx);
+}
+
+function loadDrillWord(idx){
+  let items = getAllItems();
+  drillCurrentItem = items[idx];
+  document.getElementById("drillVerb").value = idx;
+  renderDrillRows();
+}
+
+function renderDrillRows(){
+  drillAnswersVisible = false;
+
+  document.getElementById("drillPhrase").innerHTML =
+    '<b>' + VERBS[drillCurrentItem.verb].v1 + '</b> — ' + drillCurrentItem.phrase +
+    ' <span class="chip" style="--chip-color:#9CA3AF">' + topicLabel(drillCurrentItem.topic) + '</span>';
+
+  let tbody = document.getElementById("drillRows");
+  tbody.innerHTML = "";
+
+  TIMELINE_ORDER.forEach(function(tense){
+    let groupColorVar = "var(" + GROUP_COLOR_VAR[TENSE_GROUP[tense]] + ")";
+    let tr = document.createElement("tr");
+    tr.dataset.tense = tense;
+
+    let tenseCell = document.createElement("td");
+    tenseCell.className = "drill-tense-cell";
+    tenseCell.style.setProperty("--row-color", groupColorVar);
+    tenseCell.innerHTML = '<span class="dot"></span>' + tense;
+    tr.appendChild(tenseCell);
+
+    TYPES.forEach(function(type){
+      let td = document.createElement("td");
+      td.className = "drill-cell";
+
+      let cellRow = document.createElement("div");
+      cellRow.className = "drill-cell-row";
+
+      let input = document.createElement("input");
+      input.className = "text-input drill-cell-input";
+      input.dataset.type = type;
+      input.placeholder = type==="statement" ? "+" : (type==="negative" ? "–" : "?");
+
+      let hintBtn = document.createElement("button");
+      hintBtn.type = "button";
+      hintBtn.className = "cell-hint-btn";
+      hintBtn.textContent = "💡";
+      hintBtn.onclick = function(){ toggleCellFormula(this); };
+
+      cellRow.appendChild(input);
+      cellRow.appendChild(hintBtn);
+      td.appendChild(cellRow);
+
+      let formulaBox = document.createElement("div");
+      formulaBox.className = "cell-formula";
+      formulaBox.textContent = TENSES[tense].formula[type];
+      td.appendChild(formulaBox);
+
+      tr.appendChild(td);
+    });
+
+    tbody.appendChild(tr);
+  });
+
+  document.getElementById("drillResult").style.display = "none";
+  document.getElementById("drillShowAllBtn").textContent = t("drillShowAll");
+}
+
+function toggleCellFormula(btn){
+  let td = btn.closest("td");
+  let box = td.querySelector(".cell-formula");
+  let visible = box.style.display !== "none";
+  box.style.display = visible ? "none" : "block";
+  btn.classList.toggle("active", !visible);
+}
+
+function toggleDrillAnswers(){
+  if(!drillCurrentItem) return;
+  drillAnswersVisible = !drillAnswersVisible;
+  document.getElementById("drillShowAllBtn").textContent = drillAnswersVisible ? t("drillHideAll") : t("drillShowAll");
+
+  document.querySelectorAll("#drillRows tr").forEach(function(tr){
+    let tense = tr.dataset.tense;
+    tr.querySelectorAll(".drill-cell-input").forEach(function(input){
+      let type = input.dataset.type;
+      let marker = TENSES[tense].markers[type][0];
+      let combo = {verb:drillCurrentItem.verb, topic:drillCurrentItem.topic, phrase:drillCurrentItem.phrase, tense:tense, type:type, marker:marker};
+      if(drillAnswersVisible){
+        input.placeholder = buildExample(combo);
+      } else {
+        input.placeholder = type==="statement" ? "+" : (type==="negative" ? "–" : "?");
+      }
+    });
+  });
+}
+
+function checkDrill(){
+  if(!drillCurrentItem) return;
+
+  let inputs = document.querySelectorAll("#drillRows .drill-cell-input");
+  let total = inputs.length;
+  let correctCount = 0;
+
+  inputs.forEach(function(input){
+    let tr = input.closest("tr");
+    let tense = tr.dataset.tense;
+    let type = input.dataset.type;
+
+    input.classList.remove("correct","wrong");
+
+    let answer = normalize(input.value);
+    let fixed = fixSpelling(answer);
+    let text = fixed.text;
+
+    let marker = TENSES[tense].markers[type][0];
+    let combo = {verb:drillCurrentItem.verb, topic:drillCurrentItem.topic, phrase:drillCurrentItem.phrase, tense:tense, type:type, marker:marker};
+
+    let structureResult = checkStructure(text, combo);
+    let markersOk = text.includes(marker);
+    let articles = checkArticle(text);
+    let perfect = structureResult.correct && markersOk && articles.length===0 && structureResult.mistakes.length===0 && fixed.changes.length===0;
+    let passable = structureResult.correct && markersOk && articles.length===0;
+
+    if(perfect){
+      correctCount++;
+      progress.xp += 5;
+      input.classList.add("correct");
+    } else if(passable){
+      correctCount++;
+      progress.xp += 3;
+      input.classList.add("correct");
+    } else {
+      let errorKey = tense + "|" + type;
+      progress.errors[errorKey] = (progress.errors[errorKey]||0)+1;
+      input.classList.add("wrong");
+    }
+  });
+
+  progress.correct += correctCount;
+  save();
+  updateXP();
+
+  let resultEl = document.getElementById("drillResult");
+  resultEl.className = "result " + (correctCount===total ? "result--success" : "result--warn");
+  resultEl.style.display = "block";
+  resultEl.innerHTML = "<h3>" + t("drillScore") + ": " + correctCount + " / " + total + "</h3>";
+}
+
+loadDrillWord(0);
+
 function toggleCustomForm(){
   let el = document.getElementById("customForm");
   el.style.display = (el.style.display === "none") ? "block" : "none";
@@ -1392,7 +1997,7 @@ function addCustomCard(){
   let topic = document.getElementById("customTopic").value.trim() || "custom";
 
   if(!phrase){
-    alert("Введи дополнение к глаголу, например: in the park");
+    alert(t("alertNeedPhrase"));
     return;
   }
 
@@ -1410,8 +2015,78 @@ function addCustomCard(){
   document.getElementById("customPhrase").value = "";
   document.getElementById("customTopic").value = "";
 
-  show("Добавлено", `Новая карточка: <b>${VERBS[verb].v1} ${phrase}</b> (тема: ${topic})`, "info");
+  populateDrillVerbSelect();
+
+  show(t("resultAddedTitle"), `${t("newCardAdded")}: <b>${VERBS[verb].v1} ${phrase}</b> (${t("topicWord")}: ${topic})`, "info");
 }
+
+// ===============================
+// Language switching
+// ===============================
+
+function applyLanguage(){
+  document.getElementById("langRuBtn").classList.toggle("active", LANG==="ru");
+  document.getElementById("langEnBtn").classList.toggle("active", LANG==="en");
+
+  document.getElementById("tabDrillBtn").textContent = t("tabDrill");
+  document.getElementById("tabTrainingBtn").textContent = t("tabTraining");
+  document.getElementById("tabLearningBtn").textContent = t("tabLearning");
+
+  document.getElementById("drillIntro").textContent = t("drillIntro");
+  document.getElementById("drillNewBtn").textContent = t("drillNewWord");
+  document.getElementById("drillCheckAllBtn").textContent = t("drillCheckAll");
+  document.getElementById("drillThTense").textContent = t("labelTense");
+  if(drillCurrentItem){
+    renderDrillRows();
+  }
+
+  document.getElementById("timeAllOption").textContent = t("allTenses");
+  document.getElementById("topicAllOption").textContent = t("allTopics");
+  document.getElementById("typeAllOption").textContent = t("allTypes");
+  document.getElementById("typeStatementOption").textContent = t("typeStatement");
+  document.getElementById("typeNegativeOption").textContent = t("typeNegative");
+  document.getElementById("typeQuestionOption").textContent = t("typeQuestion");
+
+  for(let key in TOPIC_LABELS){
+    let el = document.getElementById("topicOption-"+key);
+    if(el) el.textContent = TOPIC_LABELS[key][LANG];
+  }
+
+  document.getElementById("newCardBtn").textContent = t("newCard");
+  document.getElementById("checkBtn").textContent = t("check");
+  document.getElementById("progressBtn").textContent = t("progress");
+  document.getElementById("repeatBtn").textContent = t("repeat");
+  document.getElementById("addWordBtn").textContent = t("addWord");
+  document.getElementById("addCardBtn").textContent = t("addCardBtn");
+
+  document.getElementById("answer").placeholder = t("answerPlaceholder");
+  document.getElementById("customPhrase").placeholder = t("customPhrasePlaceholder");
+  document.getElementById("customTopic").placeholder = t("customTopicPlaceholder");
+
+  if(!current){
+    document.getElementById("card").innerHTML = '<p class="placeholder">' + t("cardPlaceholder") + '</p>';
+  } else {
+    let toggleBtn = document.getElementById("formulaToggleBtn");
+    if(toggleBtn) toggleBtn.textContent = formulaVisible ? t("hideFormula") : t("showFormula");
+    let formulaLabelEl = document.querySelector("#formulaBox .formula-label");
+    if(formulaLabelEl) formulaLabelEl.textContent = t("labelFormula");
+  }
+
+  document.getElementById("result").style.display = "none";
+  document.getElementById("result").innerHTML = "";
+
+  let onLearning = document.getElementById("tabLearningBtn").classList.contains("active");
+  if(onLearning){
+    renderLearningInfo();
+  }
+}
+
+function setLanguage(lang){
+  LANG = lang;
+  applyLanguage();
+}
+
+applyLanguage();
 
 </script>
 </body>
