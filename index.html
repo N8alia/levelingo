@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="levelingo-logo.png">
-  
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Levelingo</title>
 
@@ -473,6 +469,17 @@ select:focus-visible,
   margin:0 0 10px;
   text-align:left;
 }
+.translate-ru-box{
+  background:#F7F5EF;
+  border-radius:var(--radius-md);
+  padding:16px;
+  font-size:18px;
+  font-weight:600;
+  text-align:left;
+  margin-bottom:12px;
+  color:var(--ink);
+  line-height:1.4;
+}
 .drill-toggles{
   display:flex;
   gap:8px;
@@ -481,61 +488,58 @@ select:focus-visible,
 .drill-toggles .hint-toggle{
   margin:0;
 }
-.drill-table-wrap{
-  overflow-x:auto;
-  margin-bottom:12px;
-  border-radius:var(--radius-md);
-  border:1.5px solid var(--line);
-}
-.drill-table{
-  border-collapse:collapse;
-  width:100%;
-  min-width:580px;
-}
-.drill-table th,
-.drill-table td{
-  padding:8px;
+.drill-tense-group{
   text-align:left;
-  border-bottom:1px solid var(--line);
-  vertical-align:top;
-}
-.drill-table thead th{
-  font-family:var(--font-mono);
-  font-size:11px;
-  text-transform:uppercase;
-  color:var(--muted);
-  background:#F7F5EF;
-  position:sticky;
-  top:0;
-}
-.drill-th-tense{ width:126px; }
-.drill-tense-cell{
-  font-family:var(--font-mono);
-  font-size:11px;
-  font-weight:600;
+  border:1.5px solid var(--line);
   border-left:4px solid var(--row-color, var(--muted));
+  border-radius:var(--radius-md);
+  padding:12px;
+  margin-bottom:12px;
 }
-.drill-tense-cell .dot{
-  width:8px;
-  height:8px;
+.drill-tense-header{
+  font-family:var(--font-mono);
+  font-size:13px;
+  font-weight:700;
+  margin:0 0 10px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.drill-tense-header .dot{
+  width:9px;
+  height:9px;
   border-radius:50%;
   background:var(--row-color, var(--muted));
   display:inline-block;
-  margin-right:4px;
+  flex-shrink:0;
+}
+.drill-type-row{
+  margin-bottom:8px;
+}
+.drill-type-row:last-child{
+  margin-bottom:0;
 }
 .drill-cell-row{
   display:flex;
-  gap:4px;
   align-items:center;
+  gap:6px;
+}
+.drill-type-symbol{
+  font-family:var(--font-mono);
+  font-weight:700;
+  width:18px;
+  flex-shrink:0;
+  text-align:center;
+  color:var(--muted);
 }
 .cell-hint-btn{
   flex-shrink:0;
-  width:24px;
-  height:24px;
-  border-radius:6px;
+  width:32px;
+  height:32px;
+  border-radius:8px;
   border:1.5px solid var(--line);
   background:white;
-  font-size:13px;
+  font-size:15px;
   cursor:pointer;
   padding:0;
   line-height:1;
@@ -550,18 +554,31 @@ select:focus-visible,
   border-color:var(--present);
   opacity:1;
 }
+.cell-check-btn:hover{
+  border-color:var(--success);
+  opacity:1;
+}
+.cell-check-btn.active{
+  background:#EAF9F1;
+  border-color:var(--success);
+  opacity:1;
+}
 .cell-formula{
-  margin-top:5px;
+  margin:6px 0 0 24px;
   font-family:var(--font-mono);
-  font-size:10px;
+  font-size:11px;
   color:var(--muted);
   line-height:1.4;
   display:none;
 }
+.cell-formula.visible{
+  display:block;
+}
 .drill-cell-input{
-  width:82px;
-  padding:8px;
-  font-size:13px;
+  flex:1;
+  min-width:0;
+  padding:11px 12px;
+  font-size:14px;
   border-radius:8px;
   border:1.5px solid var(--line);
   font-family:var(--font-body);
@@ -682,15 +699,11 @@ select:focus-visible,
   <nav class="tabs">
     <button id="tabDrillBtn" class="tab-btn active" onclick="switchTab('drill')">Прогон</button>
     <button id="tabTrainingBtn" class="tab-btn" onclick="switchTab('training')">Тренировка</button>
+    <button id="tabTranslateBtn" class="tab-btn" onclick="switchTab('translate')">Перевод</button>
     <button id="tabLearningBtn" class="tab-btn" onclick="switchTab('learning')">Теория</button>
   </nav>
 
   <section class="panel" id="drillSection">
-
-    <div class="stat-bar">
-      <span class="stat-chip" id="xpDrill">XP 0</span>
-      <span class="stat-chip stat-chip--muted" id="levelChipDrill"></span>
-    </div>
 
     <p class="drill-intro" id="drillIntro">Впиши это же слово во все времена — сразу видно, чем они отличаются</p>
 
@@ -705,19 +718,7 @@ select:focus-visible,
       <button type="button" class="hint-toggle" id="drillShowAllBtn" onclick="toggleDrillAnswers()">Показать все ответы</button>
     </div>
 
-    <div class="drill-table-wrap">
-      <table class="drill-table">
-        <thead>
-          <tr>
-            <th class="drill-th-tense" id="drillThTense">Время</th>
-            <th>+</th>
-            <th>–</th>
-            <th>?</th>
-          </tr>
-        </thead>
-        <tbody id="drillRows"></tbody>
-      </table>
-    </div>
+    <div id="drillRows"></div>
 
     <button id="drillCheckAllBtn" class="btn btn-amber" onclick="checkDrill()">Проверить всё</button>
 
@@ -726,11 +727,6 @@ select:focus-visible,
   </section>
 
   <section class="panel" id="trainingSection" style="display:none;">
-
-    <div class="stat-bar">
-      <span class="stat-chip" id="xp">XP 0</span>
-      <span class="stat-chip stat-chip--muted" id="levelChip"></span>
-    </div>
 
     <div class="controls">
       <select id="time">
@@ -807,6 +803,21 @@ select:focus-visible,
 
   </section>
 
+  <section class="panel" id="translateSection" style="display:none;">
+
+    <p class="drill-intro" id="translateIntro">Переведи фразу на английский, используя нужное время</p>
+
+    <div class="translate-ru-box" id="translateRu"></div>
+
+    <input id="translateAnswer" class="text-input" placeholder="Напиши перевод на английском">
+
+    <button id="translateCheckBtn" class="btn btn-amber" onclick="checkTranslate()">Проверить</button>
+    <button id="translateNextBtn" class="btn btn-outline btn-outline--future" onclick="newTranslateItem()">Следующая фраза</button>
+
+    <div id="translateResult" class="result" style="display:none;"></div>
+
+  </section>
+
 </div>
 
 <script>
@@ -814,7 +825,6 @@ select:focus-visible,
 // Progress is kept in memory only for this session
 // (no localStorage — it isn't available in this environment)
 let progress = {
-  xp: 0,
   correct: 0,
   errors: {},
   streak: 0
@@ -825,14 +835,8 @@ function save(){
 }
 
 function updateXP(){
-  let xpText = "XP " + progress.xp;
-  let levelText = getLevel();
-  document.getElementById("xp").innerHTML = xpText;
-  document.getElementById("levelChip").innerHTML = levelText;
-  let xpDrill = document.getElementById("xpDrill");
-  if(xpDrill) xpDrill.innerHTML = xpText;
-  let levelChipDrill = document.getElementById("levelChipDrill");
-  if(levelChipDrill) levelChipDrill.innerHTML = levelText;
+  // XP and level display were removed from the UI; kept as a no-op
+  // so existing call sites elsewhere don't need to change.
 }
 
 updateXP();
@@ -845,9 +849,11 @@ function switchTab(tab){
   document.getElementById("drillSection").style.display = (tab==="drill") ? "block" : "none";
   document.getElementById("trainingSection").style.display = (tab==="training") ? "block" : "none";
   document.getElementById("learningSection").style.display = (tab==="learning") ? "block" : "none";
+  document.getElementById("translateSection").style.display = (tab==="translate") ? "block" : "none";
   document.getElementById("tabDrillBtn").classList.toggle("active", tab==="drill");
   document.getElementById("tabTrainingBtn").classList.toggle("active", tab==="training");
   document.getElementById("tabLearningBtn").classList.toggle("active", tab==="learning");
+  document.getElementById("tabTranslateBtn").classList.toggle("active", tab==="translate");
 
   if(tab==="learning"){
     renderLearningInfo();
@@ -1026,6 +1032,7 @@ const STRINGS = {
     msgTimeOk:"Время верно", msgFixes:"Исправления", msgCorrectVariant:"Правильный вариант",
     msgGreat:"Отлично!", msgXpGained:"XP", msgGrammarOk:"Грамматика верна", msgFixThis:"Нужно исправить",
     msgCorrectly:"Правильно", msgCheck:"Проверь", msgFormula:"Формула", msgExample:"Пример",
+    msgMarkerTip:"Грамматика верна! Чтобы заодно потренировать маркер времени, попробуй использовать слово:",
     progLevel:"Уровень", progXp:"XP", progCorrect:"Правильных ответов", progStreak:"Серия",
     progWeak:"Слабые места", progNoErrors:"Ошибок нет 🎉", progNoMistakesYet:"Пока ошибок нет",
     newCardAdded:"Новая карточка", topicWord:"тема",
@@ -1040,7 +1047,13 @@ const STRINGS = {
     tabDrill:"Прогон", drillNewWord:"Новое слово", drillCheckAll:"Проверить всё",
     drillShowAll:"Показать все ответы", drillHideAll:"Скрыть ответы",
     drillScore:"Результат", drillIntro:"Впиши это же слово во все времена — сразу видно, чем они отличаются",
-    drillInputPlaceholder:"Напиши предложение"
+    drillInputPlaceholder:"Напиши предложение",
+    tabTranslate:"Перевод", translateIntro:"Переведи фразу на английский, используя нужное время",
+    translateAnswerPlaceholder:"Напиши перевод на английском",
+    translateCheck:"Проверить", translateNext:"Следующая фраза",
+    translateCorrectTitle:"Верно!", translateWrongTitle:"Попробуй ещё раз",
+    translateUsedTense:"Это время", translateTryAgain:"Не совсем то время или форма — попробуй ещё раз.",
+    translateGaveUp:"Правильный вариант"
   },
   en:{
     tabTraining:"Training", tabLearning:"Theory",
@@ -1057,6 +1070,7 @@ const STRINGS = {
     msgTimeOk:"Tense is correct", msgFixes:"Fixes", msgCorrectVariant:"Correct version",
     msgGreat:"Great job!", msgXpGained:"XP", msgGrammarOk:"Grammar is correct", msgFixThis:"Needs fixing",
     msgCorrectly:"Correct version", msgCheck:"Check", msgFormula:"Formula", msgExample:"Example",
+    msgMarkerTip:"Grammar is correct! To also practice the time marker, try using the word:",
     progLevel:"Level", progXp:"XP", progCorrect:"Correct answers", progStreak:"Streak",
     progWeak:"Weak spots", progNoErrors:"No mistakes 🎉", progNoMistakesYet:"No mistakes yet",
     newCardAdded:"New card", topicWord:"topic",
@@ -1071,7 +1085,13 @@ const STRINGS = {
     tabDrill:"Drill", drillNewWord:"New word", drillCheckAll:"Check all",
     drillShowAll:"Show all answers", drillHideAll:"Hide answers",
     drillScore:"Score", drillIntro:"Type the same word into every tense — the differences become obvious",
-    drillInputPlaceholder:"Write your sentence"
+    drillInputPlaceholder:"Write your sentence",
+    tabTranslate:"Translate", translateIntro:"Translate the phrase into English, using the correct tense",
+    translateAnswerPlaceholder:"Write the English translation",
+    translateCheck:"Check", translateNext:"Next phrase",
+    translateCorrectTitle:"Correct!", translateWrongTitle:"Try again",
+    translateUsedTense:"This is", translateTryAgain:"Not quite the right tense or form — give it another try.",
+    translateGaveUp:"Correct version"
   }
 };
 
@@ -1349,7 +1369,105 @@ function renderLearningInfo(){
 // Structural rules for checking answers
 // ===============================
 
+// ===============================
+// Translate: RU phrase -> EN using the right tense (no hints upfront)
+// ===============================
+
+const TRANSLATE_ITEMS = [
+  {ru:"Я играю в волейбол каждую неделю.", verb:"play", phrase:"volleyball", tense:"Present Simple", type:"statement", marker:"every week"},
+  {ru:"Я не пью кофе каждый день.", verb:"drink", phrase:"coffee", tense:"Present Simple", type:"negative", marker:"every day"},
+  {ru:"Я смотрю фильм прямо сейчас.", verb:"watch", phrase:"a movie", tense:"Present Continuous", type:"statement", marker:"right now"},
+  {ru:"Спроси: работаю ли я сейчас из дома?", verb:"work", phrase:"from home", tense:"Present Continuous", type:"question", marker:"now"},
+  {ru:"Я ходил в кино вчера.", verb:"go", phrase:"to the cinema", tense:"Past Simple", type:"statement", marker:"yesterday"},
+  {ru:"Я не покупал новый телефон на прошлой неделе.", verb:"buy", phrase:"a new phone", tense:"Past Simple", type:"negative", marker:"last week"},
+  {ru:"Я смотрел телевизор вчера в 8 вечера.", verb:"watch", phrase:"TV", tense:"Past Continuous", type:"statement", marker:"at 8 pm yesterday"},
+  {ru:"Я не спал в своей комнате весь день вчера.", verb:"sleep", phrase:"in my room", tense:"Past Continuous", type:"negative", marker:"all day yesterday"},
+  {ru:"Я позвоню другу завтра.", verb:"call", phrase:"my friend", tense:"Future Simple", type:"statement", marker:"tomorrow"},
+  {ru:"Я не буду готовить ужин на следующей неделе.", verb:"cook", phrase:"dinner", tense:"Future Simple", type:"negative", marker:"next week"},
+  {ru:"Я уже встретил своего друга.", verb:"meet", phrase:"my friend", tense:"Present Perfect", type:"statement", marker:"already"},
+  {ru:"Я ещё не прочитал книгу.", verb:"read", phrase:"a book", tense:"Present Perfect", type:"negative", marker:"yet"},
+  {ru:"Я изучаю английский уже два года.", verb:"study", phrase:"English", tense:"Present Perfect Continuous", type:"statement", marker:"for two years"},
+  {ru:"Спроси: работаю ли я из дома уже долгое время?", verb:"work", phrase:"from home", tense:"Present Perfect Continuous", type:"question", marker:"for a long time"}
+];
+
+let translateCurrentItem = null;
+let translateAttempts = 0;
+
+function newTranslateItem(){
+  let pool = TRANSLATE_ITEMS;
+  let idx = Math.floor(Math.random()*pool.length);
+  if(pool.length > 1 && translateCurrentItem){
+    while(pool[idx].ru === translateCurrentItem.ru){
+      idx = Math.floor(Math.random()*pool.length);
+    }
+  }
+  translateCurrentItem = pool[idx];
+  translateAttempts = 0;
+
+  document.getElementById("translateRu").textContent = translateCurrentItem.ru;
+  document.getElementById("translateAnswer").value = "";
+  document.getElementById("translateResult").style.display = "none";
+}
+
+function checkTranslate(){
+  if(!translateCurrentItem) return;
+
+  let item = translateCurrentItem;
+  let answer = normalize(document.getElementById("translateAnswer").value);
+  let fixed = fixSpelling(answer);
+  let text = fixed.text;
+
+  let combo = {verb:item.verb, phrase:item.phrase, tense:item.tense, type:item.type, marker:item.marker};
+
+  let structureResult = checkStructure(text, combo);
+  let markersOk = text.includes(item.marker);
+  let articles = checkArticle(text);
+  let correct = structureResult.correct && articles.length===0;
+
+  translateAttempts++;
+
+  let usage = LEARNING_USAGE[LANG][item.tense][0];
+  let formula = TENSES[item.tense].formula[item.type];
+  let markerTip = markersOk ? "" : `<br><br>${t("msgMarkerTip")} <span class="mono">${item.marker}</span>`;
+
+  if(correct){
+    translateCurrentItem.solved = true;
+    progress.correct += 1;
+    save();
+    updateXP();
+
+    show(
+      t("translateCorrectTitle"),
+      `${t("translateUsedTense")}: <b>${item.tense}</b> (${typeLabel(item.type)})<br><br>
+       ${usage}<br><br>
+       ${t("labelFormula")}: <span class="mono">${formula}</span>${markerTip}`,
+      "success",
+      "translateResult"
+    );
+  } else {
+    let errorKey = item.tense + "|" + item.type;
+    progress.errors[errorKey] = (progress.errors[errorKey]||0)+1;
+    save();
+    updateXP();
+
+    let extra = "";
+    if(translateAttempts >= 2){
+      extra = `<br><br>${t("translateGaveUp")}:<br><b>${buildExample(combo)}</b>`;
+    }
+
+    show(
+      t("translateWrongTitle"),
+      `${t("translateTryAgain")}<br><br>
+       ${t("labelTense")}: <b>${item.tense}</b> (${typeLabel(item.type)})<br>
+       ${t("labelFormula")}: <span class="mono">${formula}</span>${extra}`,
+      "error",
+      "translateResult"
+    );
+  }
+}
+
 const RULES = {
+
   "Present Simple":{ form:"v1", negAux:["don't","do not"], negForm:"v1", qAux:["do"], qForm:"v1" },
   "Present Continuous":{ statementAux:["am","i'm"], form:"ing", negAux:["am not","i'm not"], qAux:["am"] },
   "Past Simple":{ form:"v2", negAux:["didn't","did not"], negForm:"v1", qAux:["did"], qForm:"v1" },
@@ -1643,9 +1761,10 @@ function checkMarkers(text, combo){
   return text.includes(combo.marker);
 }
 
-function show(title,text,kind){
+function show(title,text,kind,targetId){
   kind = kind || "info";
-  let resultEl = document.getElementById("result");
+  targetId = targetId || "result";
+  let resultEl = document.getElementById(targetId);
   resultEl.className = "result result--" + kind;
   resultEl.style.display = "block";
   resultEl.innerHTML = `<h3>${title}</h3>${text}`;
@@ -1662,55 +1781,12 @@ function check(){
   let text = fixed.text;
 
   let structureResult = checkStructure(text, current);
-  let markers = checkMarkers(text, current);
+  let markersOk = checkMarkers(text, current);
   let articles = checkArticle(text);
-
   let errorKey = current.tense + "|" + current.type;
 
-  if(structureResult.correct && markers && articles.length==0){
+  if(!structureResult.correct){
 
-    if(fixed.changes.length || structureResult.mistakes.length){
-      progress.xp += 7;
-
-      show(
-        t("resultAlmostTitle"),
-        `${t("msgTimeOk")}: ✅ ${current.tense} (${typeLabel(current.type)})<br><br>
-         ${t("msgFixes")}:<br>
-         ${fixed.changes.join("<br>")}<br>
-         ${structureResult.mistakes.join("<br>")}<br><br>
-         ${t("msgCorrectVariant")}:<br>
-         <b>${buildExample(current)}</b>`,
-        "warn"
-      );
-
-    } else {
-      progress.xp += 10;
-      progress.correct++;
-
-      show(
-        t("resultCorrectTitle"),
-        `${t("msgGreat")}<br><br>
-         ${t("labelTense")}: <b>${current.tense}</b> (${typeLabel(current.type)})<br><br>
-         +10 ${t("msgXpGained")}`,
-        "success"
-      );
-    }
-
-  } else if(structureResult.correct && articles.length>0){
-
-    progress.xp += 7;
-
-    show(
-      t("resultAlmostTitle"),
-      `${t("msgGrammarOk")} ✅<br><br>
-       ${t("msgFixThis")}:<br>
-       ${articles.join("<br>")}<br><br>
-       ${t("msgCorrectly")}:<br>
-       <b>${buildExample(current)}</b>`,
-      "warn"
-    );
-
-  } else {
     progress.errors[errorKey] = (progress.errors[errorKey]||0)+1;
 
     show(
@@ -1723,11 +1799,65 @@ function check(){
        ${buildExample(current)}`,
       "error"
     );
-  }
 
-  let gainedXP = progress.xp > (check._lastXP===undefined ? 0 : check._lastXP);
-  progress.streak = gainedXP ? progress.streak+1 : 0;
-  check._lastXP = progress.xp;
+    progress.streak = 0;
+
+  } else if(articles.length>0){
+
+    show(
+      t("resultAlmostTitle"),
+      `${t("msgGrammarOk")} ✅<br><br>
+       ${t("msgFixThis")}:<br>
+       ${articles.join("<br>")}<br><br>
+       ${t("msgCorrectly")}:<br>
+       <b>${buildExample(current)}</b>`,
+      "warn"
+    );
+
+    progress.streak++;
+
+  } else if(!markersOk){
+
+    progress.correct++;
+
+    show(
+      t("resultCorrectTitle"),
+      `${t("msgGreat")}<br><br>
+       ${t("labelTense")}: <b>${current.tense}</b> (${typeLabel(current.type)})<br><br>
+       ${t("msgMarkerTip")} <span class="mono">${current.marker}</span>`,
+      "success"
+    );
+
+    progress.streak++;
+
+  } else if(fixed.changes.length || structureResult.mistakes.length){
+
+    show(
+      t("resultAlmostTitle"),
+      `${t("msgTimeOk")}: ✅ ${current.tense} (${typeLabel(current.type)})<br><br>
+       ${t("msgFixes")}:<br>
+       ${fixed.changes.join("<br>")}<br>
+       ${structureResult.mistakes.join("<br>")}<br><br>
+       ${t("msgCorrectVariant")}:<br>
+       <b>${buildExample(current)}</b>`,
+      "warn"
+    );
+
+    progress.streak++;
+
+  } else {
+
+    progress.correct++;
+
+    show(
+      t("resultCorrectTitle"),
+      `${t("msgGreat")}<br><br>
+       ${t("labelTense")}: <b>${current.tense}</b> (${typeLabel(current.type)})`,
+      "success"
+    );
+
+    progress.streak++;
+  }
 
   save();
   updateXP();
@@ -1737,23 +1867,8 @@ function check(){
 // Progress + weak-spot tracking
 // ===============================
 
-function getLevel(){
-  if(progress.xp < 500){
-    return "A1";
-  }
-  if(progress.xp < 1500){
-    return "A2";
-  }
-  if(progress.xp < 3000){
-    return "B1";
-  }
-  return "B2";
-}
-
 function showProgress(){
-  let text = `<b>${t("progLevel")}: ${getLevel()}</b><br><br>
-    ${t("progXp")}: ${progress.xp}<br>
-    ${t("progCorrect")}: ${progress.correct}<br>
+  let text = `${t("progCorrect")}: ${progress.correct}<br>
     ${t("progStreak")}: ${progress.streak}<br><br>
     <b>${t("progWeak")}:</b><br>`;
 
@@ -1857,31 +1972,36 @@ function renderDrillRows(){
     '<b>' + VERBS[drillCurrentItem.verb].v1 + '</b> — ' + drillCurrentItem.phrase +
     ' <span class="chip" style="--chip-color:#9CA3AF">' + topicLabel(drillCurrentItem.topic) + '</span>';
 
-  let tbody = document.getElementById("drillRows");
-  tbody.innerHTML = "";
+  let container = document.getElementById("drillRows");
+  container.innerHTML = "";
 
   TIMELINE_ORDER.forEach(function(tense){
     let groupColorVar = "var(" + GROUP_COLOR_VAR[TENSE_GROUP[tense]] + ")";
-    let tr = document.createElement("tr");
-    tr.dataset.tense = tense;
+    let group = document.createElement("div");
+    group.className = "drill-tense-group";
+    group.style.setProperty("--row-color", groupColorVar);
+    group.dataset.tense = tense;
 
-    let tenseCell = document.createElement("td");
-    tenseCell.className = "drill-tense-cell";
-    tenseCell.style.setProperty("--row-color", groupColorVar);
-    tenseCell.innerHTML = '<span class="dot"></span>' + tense;
-    tr.appendChild(tenseCell);
+    let header = document.createElement("div");
+    header.className = "drill-tense-header";
+    header.innerHTML = '<span class="dot"></span>' + tense;
+    group.appendChild(header);
 
     TYPES.forEach(function(type){
-      let td = document.createElement("td");
-      td.className = "drill-cell";
+      let typeRow = document.createElement("div");
+      typeRow.className = "drill-type-row";
 
       let cellRow = document.createElement("div");
       cellRow.className = "drill-cell-row";
 
+      let symbol = document.createElement("span");
+      symbol.className = "drill-type-symbol";
+      symbol.textContent = type==="statement" ? "+" : (type==="negative" ? "–" : "?");
+
       let input = document.createElement("input");
       input.className = "text-input drill-cell-input";
       input.dataset.type = type;
-      input.placeholder = type==="statement" ? "+" : (type==="negative" ? "–" : "?");
+      input.placeholder = t("drillInputPlaceholder");
 
       let hintBtn = document.createElement("button");
       hintBtn.type = "button";
@@ -1889,19 +2009,27 @@ function renderDrillRows(){
       hintBtn.textContent = "💡";
       hintBtn.onclick = function(){ toggleCellFormula(this); };
 
+      let checkBtn = document.createElement("button");
+      checkBtn.type = "button";
+      checkBtn.className = "cell-hint-btn cell-check-btn";
+      checkBtn.textContent = "✓";
+      checkBtn.onclick = function(){ checkSingleCell(input); };
+
+      cellRow.appendChild(symbol);
       cellRow.appendChild(input);
+      cellRow.appendChild(checkBtn);
       cellRow.appendChild(hintBtn);
-      td.appendChild(cellRow);
+      typeRow.appendChild(cellRow);
 
       let formulaBox = document.createElement("div");
       formulaBox.className = "cell-formula";
       formulaBox.textContent = TENSES[tense].formula[type];
-      td.appendChild(formulaBox);
+      typeRow.appendChild(formulaBox);
 
-      tr.appendChild(td);
+      group.appendChild(typeRow);
     });
 
-    tbody.appendChild(tr);
+    container.appendChild(group);
   });
 
   document.getElementById("drillResult").style.display = "none";
@@ -1909,11 +2037,11 @@ function renderDrillRows(){
 }
 
 function toggleCellFormula(btn){
-  let td = btn.closest("td");
-  let box = td.querySelector(".cell-formula");
-  let visible = box.style.display !== "none";
-  box.style.display = visible ? "none" : "block";
-  btn.classList.toggle("active", !visible);
+  let row = btn.closest(".drill-type-row");
+  let box = row.querySelector(".cell-formula");
+  let showing = box.classList.contains("visible");
+  box.classList.toggle("visible", !showing);
+  btn.classList.toggle("active", !showing);
 }
 
 function toggleDrillAnswers(){
@@ -1921,19 +2049,57 @@ function toggleDrillAnswers(){
   drillAnswersVisible = !drillAnswersVisible;
   document.getElementById("drillShowAllBtn").textContent = drillAnswersVisible ? t("drillHideAll") : t("drillShowAll");
 
-  document.querySelectorAll("#drillRows tr").forEach(function(tr){
-    let tense = tr.dataset.tense;
-    tr.querySelectorAll(".drill-cell-input").forEach(function(input){
+  document.querySelectorAll("#drillRows .drill-tense-group").forEach(function(group){
+    let tense = group.dataset.tense;
+    group.querySelectorAll(".drill-cell-input").forEach(function(input){
       let type = input.dataset.type;
       let marker = TENSES[tense].markers[type][0];
       let combo = {verb:drillCurrentItem.verb, topic:drillCurrentItem.topic, phrase:drillCurrentItem.phrase, tense:tense, type:type, marker:marker};
-      if(drillAnswersVisible){
-        input.placeholder = buildExample(combo);
-      } else {
-        input.placeholder = type==="statement" ? "+" : (type==="negative" ? "–" : "?");
-      }
+      input.placeholder = drillAnswersVisible ? buildExample(combo) : t("drillInputPlaceholder");
     });
   });
+}
+
+function evaluateCell(input){
+  let group = input.closest(".drill-tense-group");
+  let tense = group.dataset.tense;
+  let type = input.dataset.type;
+
+  input.classList.remove("correct","wrong");
+
+  let answer = normalize(input.value);
+  let fixed = fixSpelling(answer);
+  let text = fixed.text;
+
+  let marker = TENSES[tense].markers[type][0];
+  let combo = {verb:drillCurrentItem.verb, topic:drillCurrentItem.topic, phrase:drillCurrentItem.phrase, tense:tense, type:type, marker:marker};
+
+  let structureResult = checkStructure(text, combo);
+  let markersOk = text.includes(marker);
+  let articles = checkArticle(text);
+  let grammarOk = structureResult.correct && articles.length===0;
+  let correct = grammarOk;
+
+  input.classList.add(correct ? "correct" : "wrong");
+
+  if(input.dataset.scored !== "1"){
+    input.dataset.scored = "1";
+    if(correct){
+      progress.correct += 1;
+    } else {
+      let errorKey = tense + "|" + type;
+      progress.errors[errorKey] = (progress.errors[errorKey]||0)+1;
+    }
+  }
+
+  return correct;
+}
+
+function checkSingleCell(input){
+  if(!drillCurrentItem) return;
+  evaluateCell(input);
+  save();
+  updateXP();
 }
 
 function checkDrill(){
@@ -1944,41 +2110,9 @@ function checkDrill(){
   let correctCount = 0;
 
   inputs.forEach(function(input){
-    let tr = input.closest("tr");
-    let tense = tr.dataset.tense;
-    let type = input.dataset.type;
-
-    input.classList.remove("correct","wrong");
-
-    let answer = normalize(input.value);
-    let fixed = fixSpelling(answer);
-    let text = fixed.text;
-
-    let marker = TENSES[tense].markers[type][0];
-    let combo = {verb:drillCurrentItem.verb, topic:drillCurrentItem.topic, phrase:drillCurrentItem.phrase, tense:tense, type:type, marker:marker};
-
-    let structureResult = checkStructure(text, combo);
-    let markersOk = text.includes(marker);
-    let articles = checkArticle(text);
-    let perfect = structureResult.correct && markersOk && articles.length===0 && structureResult.mistakes.length===0 && fixed.changes.length===0;
-    let passable = structureResult.correct && markersOk && articles.length===0;
-
-    if(perfect){
-      correctCount++;
-      progress.xp += 5;
-      input.classList.add("correct");
-    } else if(passable){
-      correctCount++;
-      progress.xp += 3;
-      input.classList.add("correct");
-    } else {
-      let errorKey = tense + "|" + type;
-      progress.errors[errorKey] = (progress.errors[errorKey]||0)+1;
-      input.classList.add("wrong");
-    }
+    if(evaluateCell(input)) correctCount++;
   });
 
-  progress.correct += correctCount;
   save();
   updateXP();
 
@@ -1989,6 +2123,7 @@ function checkDrill(){
 }
 
 loadDrillWord(0);
+newTranslateItem();
 
 function toggleCustomForm(){
   let el = document.getElementById("customForm");
@@ -2035,14 +2170,20 @@ function applyLanguage(){
   document.getElementById("tabDrillBtn").textContent = t("tabDrill");
   document.getElementById("tabTrainingBtn").textContent = t("tabTraining");
   document.getElementById("tabLearningBtn").textContent = t("tabLearning");
+  document.getElementById("tabTranslateBtn").textContent = t("tabTranslate");
 
   document.getElementById("drillIntro").textContent = t("drillIntro");
   document.getElementById("drillNewBtn").textContent = t("drillNewWord");
   document.getElementById("drillCheckAllBtn").textContent = t("drillCheckAll");
-  document.getElementById("drillThTense").textContent = t("labelTense");
   if(drillCurrentItem){
     renderDrillRows();
   }
+
+  document.getElementById("translateIntro").textContent = t("translateIntro");
+  document.getElementById("translateAnswer").placeholder = t("translateAnswerPlaceholder");
+  document.getElementById("translateCheckBtn").textContent = t("translateCheck");
+  document.getElementById("translateNextBtn").textContent = t("translateNext");
+  document.getElementById("translateResult").style.display = "none";
 
   document.getElementById("timeAllOption").textContent = t("allTenses");
   document.getElementById("topicAllOption").textContent = t("allTopics");
